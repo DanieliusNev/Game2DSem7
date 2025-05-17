@@ -37,7 +37,7 @@ public class Movement : MonoBehaviour
     {
         if (this.nextDirection != Vector2.zero)
         {
-            setDirectrion(this.nextDirection);
+            SetDirectrion(this.nextDirection);
         }
     }
 
@@ -49,7 +49,7 @@ public class Movement : MonoBehaviour
         this.rigidbody.MovePosition(position + translation);
     }
 
-    public void setDirectrion(Vector2 direction, bool forced = false)
+    public void SetDirectrion(Vector2 direction, bool forced = false)
     {
         if (forced || !Occupied(direction))
         {
