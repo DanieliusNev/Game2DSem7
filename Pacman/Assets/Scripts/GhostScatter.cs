@@ -4,7 +4,10 @@ public class GhostScatter : GhostBehaviour
 {
     private void OnDisable()
     {
-        this.ghost.chase.Enable();
+        if (this.ghost != null)
+        {
+           this.ghost.chase.Enable(); 
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
