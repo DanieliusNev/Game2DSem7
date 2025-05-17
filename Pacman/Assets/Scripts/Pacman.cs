@@ -15,13 +15,13 @@ public class Pacman : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
-            this.movement.SetDirectrion(Vector2.up);
+            this.movement.SetDirection(Vector2.up);
         } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
-            this.movement.SetDirectrion(Vector2.down);
+            this.movement.SetDirection(Vector2.down);
         } else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
-            this.movement.SetDirectrion(Vector2.left);
+            this.movement.SetDirection(Vector2.left);
         } else if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
-            this.movement.SetDirectrion(Vector2.right);
+            this.movement.SetDirection(Vector2.right);
         }
 
         float angle = Mathf.Atan2(this.movement.direction.y, this.movement.direction.x);

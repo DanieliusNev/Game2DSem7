@@ -9,8 +9,16 @@ public abstract class GhostBehaviour : MonoBehaviour
 
     private void Awake()
     {
-        this.ghost = GetComponent<Ghost>();
         this.enabled = false;
+    }
+
+    private void OnEnable()
+    {
+        // Ensure ghost is set no matter the Unity lifecycle timing
+        if (this.ghost == null)
+        {
+            this.ghost = GetComponent<Ghost>();
+        }
     }
 
     public void Enable()

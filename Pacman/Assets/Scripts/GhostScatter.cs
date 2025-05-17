@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GhostScatter : GhostBehaviour
@@ -27,7 +25,7 @@ public class GhostScatter : GhostBehaviour
                 }
             }
 
-            this.ghost.movement.SetDirectrion(node.availableDirections[index]);
+            this.ghost.movement.SetDirection(node.availableDirections[index]);
         }
     }
 }
