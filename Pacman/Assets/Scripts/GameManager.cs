@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
  public int score{ get; private set;} // can access the score but cant change it
  public int lives{ get; private set;}
  public TMP_Text scoreText;  // score
-
+public TMP_Text livesText;
 
 
     private void Start()
@@ -36,11 +36,13 @@ public class GameManager : MonoBehaviour
     private void SetScore(int Score)
     {
         this.score = Score;
-        this.scoreText.text = "Score: " + this.score;
+        this.scoreText.text = "" + this.score;
     }
 
-    private void SetLives(int lives){
+    private void SetLives(int lives)
+    {
         this.lives = lives;
+        this.livesText.text = "x" + this.lives;
     }
 
     private void NewRound(){
