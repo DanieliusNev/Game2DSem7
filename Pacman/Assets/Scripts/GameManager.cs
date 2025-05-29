@@ -1,6 +1,7 @@
 
 using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,8 +12,12 @@ public class GameManager : MonoBehaviour
  public int ghostMultiplier { get; private set; } = 1;
  public int score{ get; private set;} // can access the score but cant change it
  public int lives{ get; private set;}
+ public TMP_Text scoreText;  // score
 
-    private void Start(){
+
+
+    private void Start()
+    {
         NewGame();
     }
 
@@ -26,10 +31,12 @@ public class GameManager : MonoBehaviour
         SetLives(3);
         NewRound();
     }
-    
 
-    private void SetScore(int Score){
+
+    private void SetScore(int Score)
+    {
         this.score = Score;
+        this.scoreText.text = "Score: " + this.score;
     }
 
     private void SetLives(int lives){
