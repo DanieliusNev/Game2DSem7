@@ -159,7 +159,7 @@ MonoBehaviour:
   pacman: {fileID: 1960061661}
   pellets: {fileID: 186258156}
   scoreText: {fileID: 1045021258}
-  livesText: {fileID: 0}
+  livesText: {fileID: 1047222172}
 --- !u!4 &65132524
 Transform:
   m_ObjectHideFlags: 0
