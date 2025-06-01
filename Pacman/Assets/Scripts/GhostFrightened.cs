@@ -22,6 +22,9 @@ public class GhostFrightened : GhostBehaviour
     }
     public override void Disable()
     {
+        if (!Application.isPlaying) return; // prevent execution in editor reload
+    if (body == null || eyes == null || blue == null || white == null) return;
+
         base.Disable();
         this.body.enabled = true;
         this.eyes.enabled = true;
