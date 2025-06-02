@@ -8,13 +8,14 @@ public class GameManager : MonoBehaviour
  public Ghost[] ghosts;
  public Pacman pacman;
  public Transform pellets; //transform bc need to look through all the children
+ public GameOverScreen gameOverScreen;
 
  public int ghostMultiplier { get; private set; } = 1;
  public int score{ get; private set;} // can access the score but cant change it
  public int lives{ get; private set;}
  public TMP_Text scoreText;  // score
-public TMP_Text livesText;
-public GameObject deathAnimationPrefab; // assign prefab in inspector
+ public TMP_Text livesText;
+ public GameObject deathAnimationPrefab; // assign prefab in inspector
 
 
 
@@ -24,7 +25,7 @@ public GameObject deathAnimationPrefab; // assign prefab in inspector
     }
 
     private void Update(){
-        if(this.lives <= 0 && Input.anyKeyDown){ //for now any key to start the game over, I think later its better to set up a specific screen with a specific button and key
+        if(false){ //for now any key to start the game over, I think later its better to set up a specific screen with a specific button and key
             NewGame();
         }
     }
@@ -34,6 +35,11 @@ public GameObject deathAnimationPrefab; // assign prefab in inspector
         NewRound();
     }
 
+    public void RestartGame()
+    {
+        gameOverScreen.Reset();
+        NewGame();
+    }
 
     private void SetScore(int Score)
     {
@@ -70,6 +76,8 @@ public GameObject deathAnimationPrefab; // assign prefab in inspector
             this.ghosts[i].gameObject.SetActive(false);
         }
         this.pacman.gameObject.SetActive(false); //turning all object off
+
+        gameOverScreen.Setup(score);
     }
 
     public void GhostEaten(Ghost ghost){
@@ -79,30 +87,28 @@ public GameObject deathAnimationPrefab; // assign prefab in inspector
     }
 
     public void PacmanEaten()
-{
-    Vector3 deathPos = pacman.transform.position;
-
-    // Show animation (instantiated clone plays at Pacman's last position)
-    GameObject anim = Instantiate(deathAnimationPrefab, deathPos, Quaternion.identity);
-    anim.GetComponent<PacmanDeathAnimation>().Play(deathPos);
-
-    // Hide Pacman
-    pacman.gameObject.SetActive(false);
-
-    // Update lives
-    SetLives(this.lives - 1);
-
-    if (this.lives > 0)
     {
-        Invoke(nameof(ResetState), 3.0f);
-    }
-    else
-    {
-        GameOver();
-    }
-}
+        Vector3 deathPos = pacman.transform.position;
 
+        // Show animation (instantiated clone plays at Pacman's last position)
+        GameObject anim = Instantiate(deathAnimationPrefab, deathPos, Quaternion.identity);
+        anim.GetComponent<PacmanDeathAnimation>().Play(deathPos);
 
+        // Hide Pacman
+        pacman.gameObject.SetActive(false);
+
+        // Update lives
+        SetLives(this.lives - 1);
+
+        if (this.lives > 0)
+        {
+            Invoke(nameof(ResetState), 3.0f);
+        }
+        else
+        {
+            GameOver();
+        }
+    }
 
     public void PelletEaten(Pellet pellet)
     {
