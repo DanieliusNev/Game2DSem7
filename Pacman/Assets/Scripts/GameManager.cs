@@ -1,6 +1,7 @@
 
 using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,8 +12,12 @@ public class GameManager : MonoBehaviour
  public int ghostMultiplier { get; private set; } = 1;
  public int score{ get; private set;} // can access the score but cant change it
  public int lives{ get; private set;}
+ public TMP_Text scoreText;  // score
+public TMP_Text livesText;
 
-    private void Start(){
+
+    private void Start()
+    {
         NewGame();
     }
 
@@ -26,14 +31,18 @@ public class GameManager : MonoBehaviour
         SetLives(3);
         NewRound();
     }
-    
 
-    private void SetScore(int Score){
+
+    private void SetScore(int Score)
+    {
         this.score = Score;
+        this.scoreText.text = "" + this.score;
     }
 
-    private void SetLives(int lives){
+    private void SetLives(int lives)
+    {
         this.lives = lives;
+        this.livesText.text = "x" + this.lives;
     }
 
     private void NewRound(){
@@ -92,7 +101,10 @@ public class GameManager : MonoBehaviour
 
     public void PowerPelletEaten(PowerPellet pellet)
     {
-        // TODO: changing ghost state
+        for (int i = 0; i < this.ghosts.Length; i++)
+        {
+            this.ghosts[i].frightened.Enable(pellet.duration);
+        }
         
         PelletEaten(pellet);
         CancelInvoke();
