@@ -10,6 +10,7 @@ public class GhostFrightened : GhostBehaviour
     public SpriteRenderer white;
     public bool eaten { get; private set; }
 
+
     public override void Enable(float duration)
     {
         base.Enable(duration);
@@ -21,16 +22,20 @@ public class GhostFrightened : GhostBehaviour
         Invoke(nameof(Flash), duration / 2.0f);
     }
     public override void Disable()
-    {
-        if (!Application.isPlaying) return; // prevent execution in editor reload
+{
+    if (!Application.isPlaying) return;
     if (body == null || eyes == null || blue == null || white == null) return;
 
-        base.Disable();
-        this.body.enabled = true;
-        this.eyes.enabled = true;
-        this.blue.enabled = false;
-        this.white.enabled = false;
-    }
+    base.Disable();
+
+    body.enabled = true;
+    eyes.enabled = true;
+    blue.enabled = false;
+    white.enabled = false;
+
+    
+}
+
     private void Flash()
     {
         if (!this.eaten)
@@ -67,6 +72,8 @@ public class GhostFrightened : GhostBehaviour
 
     private void OnDisable()
     {
+        Debug.LogWarning($"{ghost.name} GhostFrightened got disabled. Eaten: {eaten}, Enabled Behaviors - Chase: {ghost.chase?.enabled}, Scatter: {ghost.scatter?.enabled}");
+
         this.ghost.movement.speedMultiplier = 1.0f;
         this.eaten = false;
     }
@@ -96,7 +103,7 @@ public class GhostFrightened : GhostBehaviour
                 Vector3 newPosition = this.transform.position + new Vector3(availableDirection.x, availableDirection.y, 0.0f);
                 float distance = (this.ghost.target.position - newPosition).sqrMagnitude;
 
-                if (distance < maxDistance)
+                if (distance > maxDistance)
                 {
                     direction = availableDirection;
                     maxDistance = distance;
