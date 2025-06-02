@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
  public int lives{ get; private set;}
  public TMP_Text scoreText;  // score
 public TMP_Text livesText;
+public GameObject deathAnimationPrefab; // assign prefab in inspector
+
 
 
     private void Start()
@@ -76,15 +78,31 @@ public TMP_Text livesText;
         this.ghostMultiplier++;
     }
 
-    public void PacmanEaten(){
-        this.pacman.gameObject.SetActive(false);
-        SetLives(this.lives - 1);
-        if(this.lives>0){
-            Invoke(nameof(ResetState), 3.0f); //reseting round after 3sec
-        } else{
-            GameOver();
-        }
+    public void PacmanEaten()
+{
+    Vector3 deathPos = pacman.transform.position;
+
+    // Show animation (instantiated clone plays at Pacman's last position)
+    GameObject anim = Instantiate(deathAnimationPrefab, deathPos, Quaternion.identity);
+    anim.GetComponent<PacmanDeathAnimation>().Play(deathPos);
+
+    // Hide Pacman
+    pacman.gameObject.SetActive(false);
+
+    // Update lives
+    SetLives(this.lives - 1);
+
+    if (this.lives > 0)
+    {
+        Invoke(nameof(ResetState), 3.0f);
     }
+    else
+    {
+        GameOver();
+    }
+}
+
+
 
     public void PelletEaten(Pellet pellet)
     {
