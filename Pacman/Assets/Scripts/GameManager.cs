@@ -10,14 +10,21 @@ public class GameManager : MonoBehaviour
  public Transform pellets; //transform bc need to look through all the children
  public GameOverScreen gameOverScreen;
 
+ public AudioClip gameOverClip;
+ public AudioClip victoryClip;
+ public AudioClip pelletClip;
+ public AudioClip powerPelletClip;
+ public AudioClip ghostEatenClip;
+ public AudioClip pacmanEatenClip;
+
+ private AudioSource audioSource;
+
  public int ghostMultiplier { get; private set; } = 1;
  public int score{ get; private set;} // can access the score but cant change it
  public int lives{ get; private set;}
  public TMP_Text scoreText;  // score
  public TMP_Text livesText;
  public GameObject deathAnimationPrefab; // assign prefab in inspector
-
-
 
     private void Start()
     {
@@ -78,10 +85,13 @@ public class GameManager : MonoBehaviour
         this.pacman.gameObject.SetActive(false); //turning all object off
 
         gameOverScreen.Setup(score);
+
+        AudioSource.PlayClipAtPoint(gameOverClip, transform.position, 1f);
     }
 
     public void GhostEaten(Ghost ghost){
         int points = ghost.points + this.ghostMultiplier;
+        AudioSource.PlayClipAtPoint(ghostEatenClip, transform.position, 1f);
         SetScore(this.score + points);
         this.ghostMultiplier++;
     }
@@ -89,6 +99,8 @@ public class GameManager : MonoBehaviour
     public void PacmanEaten()
     {
         Vector3 deathPos = pacman.transform.position;
+
+        AudioSource.PlayClipAtPoint(pacmanEatenClip, transform.position, 1f);
 
         // Show animation (instantiated clone plays at Pacman's last position)
         GameObject anim = Instantiate(deathAnimationPrefab, deathPos, Quaternion.identity);
@@ -114,6 +126,8 @@ public class GameManager : MonoBehaviour
     {
         pellet.gameObject.SetActive(false);
 
+        AudioSource.PlayClipAtPoint(pelletClip, transform.position, 0.8f);
+
         SetScore(this.score + pellet.points);
 
         if (!HasRemainingPellets())
@@ -125,6 +139,8 @@ public class GameManager : MonoBehaviour
 
     public void PowerPelletEaten(PowerPellet pellet)
     {
+        AudioSource.PlayClipAtPoint(powerPelletClip, transform.position, 1f);
+
         for (int i = 0; i < this.ghosts.Length; i++)
         {
             this.ghosts[i].frightened.Enable(pellet.duration);

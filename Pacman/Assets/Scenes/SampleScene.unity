@@ -298,11 +298,12 @@ MonoBehaviour:
   pacman: {fileID: 1960061661}
   pellets: {fileID: 186258156}
   gameOverScreen: {fileID: 1729886080}
-  gameOverClip: {fileID: 8300000, guid: 02e3754eab642494390a3fda3c0c45f5, type: 3}
+  gameOverClip: {fileID: 8300000, guid: 7388cb4ca0e954750b45d6be142cf742, type: 3}
   victoryClip: {fileID: 0}
-  pelletClip: {fileID: 0}
-  powerPelletClip: {fileID: 0}
-  ghostEatenClip: {fileID: 0}
+  pelletClip: {fileID: 8300000, guid: ccf38448d4d7c4b888a358b9e407e3b9, type: 3}
+  powerPelletClip: {fileID: 8300000, guid: aabce9df33bdc41b783de6abd0739cb5, type: 3}
+  ghostEatenClip: {fileID: 8300000, guid: 72389ac937a0f4eef8bb9297ef5d7b88, type: 3}
+  pacmanEatenClip: {fileID: 8300000, guid: 357a173b19c2a4f56a653347c1df8c0f, type: 3}
   scoreText: {fileID: 1045021258}
   livesText: {fileID: 1047222172}
   deathAnimationPrefab: {fileID: 38006216}
