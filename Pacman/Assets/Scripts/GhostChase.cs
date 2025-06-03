@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class GhostChase : GhostBehaviour
 {
-    private void OnDisable()
+    [SerializeField] private GhostChaseStrategyBase chaseStrategy;
+
+    private void Start()
     {
-        if (this.ghost != null)
+        if (chaseStrategy == null)
         {
-           this.ghost.scatter.Enable(); 
+            Debug.LogError($"{name}: No chase strategy assigned.");
         }
     }
 
@@ -14,17 +16,17 @@ public class GhostChase : GhostBehaviour
     {
         Node node = other.GetComponent<Node>();
 
-        if (node != null && this.enabled && !this.ghost.frightened.enabled)
+        if (node != null && this.enabled && !this.ghost.frightened.enabled && chaseStrategy != null)
         {
             Vector2 direction = Vector2.zero;
             float minDistance = float.MaxValue;
 
+            Vector2 target = chaseStrategy.GetTargetPosition(this.ghost);
+
             foreach (Vector2 availableDirection in node.availableDirections)
             {
-                // This would be our new direction, if we were to move to this direction
-                Vector3 newPosition = this.transform.position + new Vector3(availableDirection.x, availableDirection.y, 0.0f);
-                // calculating the distance from this new position to the target (we are using sqrMagnitude, because it has better performance than simple magnitude)
-                float distance = (this.ghost.target.position - newPosition).sqrMagnitude;
+                Vector3 newPosition = this.transform.position + (Vector3)availableDirection;
+                float distance = (target - (Vector2)newPosition).sqrMagnitude;
 
                 if (distance < minDistance)
                 {
@@ -34,6 +36,14 @@ public class GhostChase : GhostBehaviour
             }
 
             this.ghost.movement.SetDirection(direction);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (this.ghost != null && this.ghost.scatter != null)
+        {
+            this.ghost.scatter.Enable();
         }
     }
 }
