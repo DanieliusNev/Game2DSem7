@@ -309,6 +309,9 @@ MonoBehaviour:
   deathAnimationPrefab: {fileID: 38006216}
   currentLevel: 1
   fruitDisplay: {fileID: 1550432421}
+  fruitPrefab: {fileID: 6875574815232763381, guid: 1203cde07d7880c47bd890020c343c50, type: 3}
+  fruitSpawnPoint: {fileID: 752840438}
+  fruitScores: 640000002c010000f4010000bc020000e8030000e8030000d0070000b80b0000b80b000088130000
 --- !u!4 &65132524
 Transform:
   m_ObjectHideFlags: 0
@@ -3688,6 +3691,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f707eb79fc0245b1b98a51213da3501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &752840437
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 752840438}
+  m_Layer: 0
+  m_Name: FruitSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &752840438
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752840437}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -3.45, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2100720272}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &768694313
 GameObject:
   m_ObjectHideFlags: 0
@@ -11884,6 +11918,7 @@ Transform:
   - {fileID: 1301370226}
   - {fileID: 186258156}
   - {fileID: 1289995717}
+  - {fileID: 752840438}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
