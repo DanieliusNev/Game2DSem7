@@ -69,5 +69,15 @@ public class Movement : MonoBehaviour
         return hit.collider != null;
     }
 
+    public void SetSpeedByLevel(int level, int maxLevel = 10)
+    {
+        int capped = Mathf.Min(level, maxLevel);
+        this.speed = 8.0f + (0.1f * (capped - 1));
+        this.speedMultiplier = 1.0f;
+        Debug.Log("Ghost speed: " + this.speed + ", multiplier: " + this.speedMultiplier);
+
+}
+
+
 
 }

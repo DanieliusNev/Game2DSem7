@@ -26,6 +26,10 @@ public class GameManager : MonoBehaviour
  public TMP_Text livesText;
  public GameObject deathAnimationPrefab; // assign prefab in inspector
 
+ public int currentLevel = 1;
+ public FruitDisplay fruitDisplay;
+    
+
     private void Start()
     {
         NewGame();
@@ -43,10 +47,34 @@ public class GameManager : MonoBehaviour
     }
 
     public void RestartGame()
+{
+    gameOverScreen.Reset();
+
+    currentLevel = 1;
+    SetScore(0);
+    SetLives(3);
+
+    pacman.gameObject.SetActive(true);
+    foreach (Ghost ghost in ghosts)
     {
-        gameOverScreen.Reset();
-        NewGame();
+        ghost.gameObject.SetActive(true);
     }
+
+    ResetState(); // ⬅️ Force reset their positions and states
+
+    foreach (Transform pellet in this.pellets)
+    {
+        pellet.gameObject.SetActive(true);
+    }
+
+    if (fruitDisplay != null)
+    {
+        fruitDisplay.SetFruitForLevel(currentLevel);
+    }
+}
+
+
+
 
     private void SetScore(int Score)
     {
@@ -60,25 +88,36 @@ public class GameManager : MonoBehaviour
         this.livesText.text = "x" + this.lives;
     }
 
-    private void NewRound(){
-        foreach(Transform pellet in this.pellets){
-            pellet.gameObject.SetActive(true);
-        }
+    private void NewRound()
+{
+    if (fruitDisplay != null)
+        fruitDisplay.SetFruitForLevel(currentLevel);
 
-        ResetState();
+    foreach (Transform pellet in this.pellets)
+    {
+        pellet.gameObject.SetActive(true);
     }
+
+    ResetState();
+    
+}
+
 
     private void ResetState(){
         ResetGhostMultiplier();
 
-        for(int i = 0; i<this.ghosts.Length; i++ ){
+        for (int i = 0; i < this.ghosts.Length; i++)
+        {
+
             this.ghosts[i].ResetState();
+            // Set ghost speed based on current level
+            this.ghosts[i].movement.SetSpeedByLevel(currentLevel); 
         }
         this.pacman.ResetState();
     }
 
     private void GameOver(){
-        //ui later
+        currentLevel = 1;
         for(int i = 0; i<this.ghosts.Length; i++ ){
             this.ghosts[i].gameObject.SetActive(false);
         }
@@ -132,6 +171,7 @@ public class GameManager : MonoBehaviour
 
         if (!HasRemainingPellets())
         {
+            currentLevel++;
             this.pacman.gameObject.SetActive(false);
             Invoke(nameof(NewRound), 3.0f);
         }
