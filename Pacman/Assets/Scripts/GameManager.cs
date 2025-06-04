@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text scoreText;  // score
     public TMP_Text livesText;
     public GameObject deathAnimationPrefab; // assign prefab in inspector
+    public GameObject startScreenPanel;
 
     public int currentLevel = 1;
     public FruitDisplay fruitDisplay;
@@ -38,11 +39,24 @@ public class GameManager : MonoBehaviour
     private int pelletsEaten = 0;
     private bool fruitSpawned = false;
 
+    private void Start() {
+        pacman.gameObject.SetActive(false);
+        foreach (Ghost ghost in ghosts) {
+            ghost.gameObject.SetActive(false);
+        }
 
-    private void Start()
-    {
+        // Optional: hide pellets too
+        foreach (Transform pellet in this.pellets) {
+            pellet.gameObject.SetActive(false);
+        }
+    }
+
+
+    public void StartGame() {
+        startScreenPanel.SetActive(false);
         NewGame();
     }
+
 
     private void Update()
     {
