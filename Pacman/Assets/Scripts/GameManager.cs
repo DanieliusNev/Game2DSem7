@@ -2,16 +2,29 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
     public Ghost[] ghosts;
     public Pacman pacman;
     public Transform pellets; //transform bc need to look through all the children
+
+    // Win screen
     public GameObject winScreenPanel;
     public TMP_Text winScoreText; // link to final score text on win screen
+
+    // Game Over screen
     public GameOverScreen gameOverScreen;
 
+    // Speed pellet
+    public GameObject speedPelletPrefab;
+    public Transform speedPelletSpawnPoint;
+
+    private float speedPelletTimer = 0f;
+    private bool speedPelletActive = false;
+
+    // Audio clips
     public AudioClip gameOverClip;
     public AudioClip victoryClip;
     public AudioClip pelletClip;
@@ -53,12 +66,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     public void StartGame() {
         startScreenPanel.SetActive(false);
         NewGame();
     }
-
 
     private void Update()
     {
@@ -66,9 +77,24 @@ public class GameManager : MonoBehaviour
         { //for now any key to start the game over, I think later its better to set up a specific screen with a specific button and key
             NewGame();
         }
+
+        if (!speedPelletActive)
+        {
+            speedPelletTimer -= Time.deltaTime;
+
+            if (speedPelletTimer <= 0f)
+            {
+                SpawnSpeedPellet();
+                speedPelletActive = true;
+            }
+        }
     }
+
     private void NewGame()
     {
+        speedPelletTimer = 30f;
+        speedPelletActive = false;
+
         SetScore(0); //start game with 0
         SetLives(3);
         NewRound();
@@ -109,9 +135,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-
-
     private void SetScore(int Score)
     {
         this.score = Score;
@@ -140,7 +163,6 @@ public class GameManager : MonoBehaviour
 
 
     }
-
 
     private void ResetState()
     {
@@ -186,10 +208,23 @@ public class GameManager : MonoBehaviour
         if (winScreenPanel != null) {
             winScreenPanel.SetActive(true);
         }
-
-        //Time.timeScale = 0f; // optional: pause game
     }
 
+    private void SpawnSpeedPellet()
+    {
+        if (speedPelletPrefab != null && speedPelletSpawnPoint != null)
+        {
+            Instantiate(speedPelletPrefab, speedPelletSpawnPoint.position, Quaternion.identity);
+        }
+    }
+
+    public void SpeedPelletEaten(SpeedPellet pellet)
+    {
+        PelletEaten(pellet);
+        StartCoroutine(SpeedBoost(pellet.duration));
+        speedPelletTimer = 30f;
+        speedPelletActive = false;
+    }
 
     public void GhostEaten(Ghost ghost)
     {
@@ -238,8 +273,8 @@ public class GameManager : MonoBehaviour
         // Spawn fruit at 70th pellet, only once
         if (pelletsEaten == 70 && !fruitSpawned)
         {
-        SpawnFruitForLevel(currentLevel);
-        fruitSpawned = true;
+            SpawnFruitForLevel(currentLevel);
+            fruitSpawned = true;
         }
 
         if (!HasRemainingPellets())
@@ -290,30 +325,43 @@ public class GameManager : MonoBehaviour
     }
     
     private void SpawnFruitForLevel(int level)
-{
-    if (fruitPrefab == null || fruitSpawnPoint == null)
-        return;
+    {
+        if (fruitPrefab == null || fruitSpawnPoint == null)
+            return;
 
-    if (currentFruitInstance != null)
-        Destroy(currentFruitInstance);
+        if (currentFruitInstance != null)
+            Destroy(currentFruitInstance);
 
-    currentFruitInstance = Instantiate(fruitPrefab, fruitSpawnPoint.position, Quaternion.identity);
+        currentFruitInstance = Instantiate(fruitPrefab, fruitSpawnPoint.position, Quaternion.identity);
 
-    // Set correct sprite
-    SpriteRenderer sr = currentFruitInstance.GetComponent<SpriteRenderer>();
-    Fruit fruit = currentFruitInstance.GetComponent<Fruit>();
+        // Set correct sprite
+        SpriteRenderer sr = currentFruitInstance.GetComponent<SpriteRenderer>();
+        Fruit fruit = currentFruitInstance.GetComponent<Fruit>();
 
-    int index = Mathf.Clamp(level - 1, 0, fruitDisplay.fruitSprites.Length - 1);
-    sr.sprite = fruitDisplay.fruitSprites[index];
-    fruit.score = fruitScores[index];
+        int index = Mathf.Clamp(level - 1, 0, fruitDisplay.fruitSprites.Length - 1);
+        sr.sprite = fruitDisplay.fruitSprites[index];
+        fruit.score = fruitScores[index];
 
-    // Optional: auto-destroy after 10 seconds
-    Destroy(currentFruitInstance, 5f);
-}
-public void AddFruitScore(int fruitPoints)
-{
-    SetScore(this.score + fruitPoints);
-}
+        Destroy(currentFruitInstance, 5f);
+    }
 
+    public void AddFruitScore(int fruitPoints)
+    {
+        SetScore(this.score + fruitPoints);
+    }
+
+    private IEnumerator SpeedBoost(float duration)
+    {
+        float originalMultiplier = pacman.movement.speedMultiplier;
+
+        pacman.GetComponent<SpriteRenderer>().color = Color.cyan;
+
+        pacman.movement.speedMultiplier = 1.5f;
+
+        yield return new WaitForSeconds(duration);
+
+        pacman.movement.speedMultiplier = originalMultiplier;
+        pacman.GetComponent<SpriteRenderer>().color = Color.white;
+    }
 
 }

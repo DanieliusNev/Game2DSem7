@@ -300,6 +300,8 @@ MonoBehaviour:
   winScreenPanel: {fileID: 993064529}
   winScoreText: {fileID: 113746838}
   gameOverScreen: {fileID: 1729886080}
+  speedPelletPrefab: {fileID: 6689345377836539094, guid: 67017160189234db0a680b07fe849b7e, type: 3}
+  speedPelletSpawnPoint: {fileID: 439292438}
   gameOverClip: {fileID: 8300000, guid: 7388cb4ca0e954750b45d6be142cf742, type: 3}
   victoryClip: {fileID: 0}
   pelletClip: {fileID: 8300000, guid: ccf38448d4d7c4b888a358b9e407e3b9, type: 3}
@@ -3503,6 +3505,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &439292437
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 439292438}
+  m_Layer: 0
+  m_Name: SpeedPelletSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &439292438
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439292437}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 8.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2100720272}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &445363647
 GameObject:
@@ -13320,6 +13353,7 @@ Transform:
   - {fileID: 186258156}
   - {fileID: 1289995717}
   - {fileID: 752840438}
+  - {fileID: 439292438}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
