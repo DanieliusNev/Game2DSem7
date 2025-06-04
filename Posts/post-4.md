@@ -1,53 +1,31 @@
-# Milestone 2: Chasing Logic — Ghost AI and Behaviors
+# 🧩 Milestone 2: Ghost Behavior & AI
 
-Our second milestone focused on giving life and personality to the enemies of the game—namely, the four iconic ghosts. This stage emphasized the development of movement logic, AI decision-making, and state-based behavior systems that allow each ghost to act uniquely and pose a real challenge to players.
+For this milestone, we worked on getting the ghost logic fully working in our Pac-Man game. In the beginning, all the ghosts were using the same logic — they just chased Pac-Man by heading straight toward his current position. While this worked for testing, it didn’t feel like the original game and made the ghosts too similar.
 
-## Project Goals for Milestone 2
+We started by setting up each ghost with:
+- A **collider** and **Rigidbody2D** so they can detect intersections and collide with Pac-Man.
+- A **Movement script** that handles moving in a direction until they hit a node, where they can switch direction.
+- Separate behavior scripts for **Chase**, **Scatter**, **Frightened**, and **Home** states.
 
-The primary objective was to design and implement ghost behaviors that closely mimic the original Pac-Man experience, while maintaining modularity for future enhancement. Each ghost needed to:
-- Move with intent using node-based logic
-- Transition fluidly between chase, scatter, frightened, and home states
-- Demonstrate distinct AI strategies based on proximity and prediction
-- React dynamically to player actions and power-up effects
+Each behavior is a separate MonoBehaviour script that can be enabled or disabled depending on what the ghost should be doing. For example, when Pac-Man eats a Power Pellet, we disable the Chase and Scatter scripts and enable the Frightened one.
 
-Achieving this meant building a flexible behavior system that could accommodate both shared and unique ghost logic.
+## Introducing Unique AI for Each Ghost
 
-## Implemented Systems
+To make the ghosts act differently, we implemented a new system using a **base class called `GhostChaseStrategyBase`**. This allowed us to give each ghost their own custom script for targeting Pac-Man. Here’s how each one works:
 
-### 1. Ghost State Architecture
+- **Blinky** (Red): Just chases Pac-Man’s current position.
+- **Pinky** (Pink): Targets 4 tiles ahead of Pac-Man’s direction.
+- **Inky** (Blue): Uses both Pac-Man’s and Blinky’s positions to calculate a strange offset.
+- **Clyde** (Orange): If close to Pac-Man, he runs away to the corner; if far, he chases.
 
-We structured each ghost using the `Ghost.cs` script, which ties together various components: `GhostChase`, `GhostScatter`, `GhostFrightened`, and `GhostHome`. Upon initialization or reset, the ghost’s behavior scripts are selectively enabled based on its current state. This state-driven architecture ensures consistent transitions—for instance, switching from chase to scatter mode, or entering the frightened state when Pac-Man consumes a power pellet.
+We connect these strategies in the inspector by dragging the correct script onto each ghost’s Chase behavior. At every node, the ghost checks which directions are available and picks the one that gets it closest to its current target.
 
-### 2. Node-Based Navigation
+## Handling Transitions and Bugs
 
-Navigating the maze intelligently is crucial to the ghost experience. At every intersection (defined via `Node.cs`), ghosts evaluate their available movement options. Using raycasting, nodes detect unblocked directions and present them to the ghost. The `GhostChase.cs` script then selects the direction that minimizes the distance to a target position calculated by its current AI strategy. This makes ghost movement feel deliberate and strategic, while remaining responsive to Pac-Man's position.
+One of the challenges we had was making sure the ghosts switch properly between states (chase, scatter, frightened, etc.). We also had to make sure that the ghosts don’t get stuck in tunnels or spin around at corners. We fixed this by checking the ghost’s current state and only changing direction when they reach a node.
 
-### 3. Behavioral States and Transitions
+Another small challenge was assigning the strategy scripts in Unity. Because we’re using an abstract base class, we had to make sure Unity can still let us drag and drop the right script in the inspector.
 
-Ghosts alternate between various behaviors depending on game events:
-- **Home** (`GhostHome.cs`): Ghosts begin here or return after being eaten. An exit coroutine smoothly transitions them into active play.
-- **Scatter**: Temporarily diverts ghosts to specific map corners, breaking up chase patterns.
-- **Chase**: Activates ghost-specific pursuit logic targeting Pac-Man.
-- **Frightened**: Triggered by `PowerPellet.cs`, ghosts become vulnerable and move randomly to avoid the player.
+## Final Result
 
-Each behavior is encapsulated as a separate component that can be toggled independently, making transitions clean and debuggable.
-
-### 4. Individual AI Strategies
-
-To make each ghost unique, we implemented the Strategy design pattern using `GhostChaseStrategyBase.cs`. Each ghost follows a distinct chase behavior:
-- **Blinky** targets Pac-Man directly.
-- **Pinky** (`PinkyChaseStrategy.cs`) targets four tiles ahead of Pac-Man’s current direction.
-- **Inky** (`InkyChaseStrategy.cs`) calculates a vector between Blinky and a point ahead of Pac-Man to determine its target.
-- **Clyde** (`ClydeChaseStrategy.cs`) switches between chasing Pac-Man and fleeing to a corner based on proximity.
-
-This modular strategy system allows for easy tuning and expansion, encouraging experimentation with future enemy types or difficulty modes.
-
-## Technical Challenges
-
-* **Node Evaluation Accuracy**: Ensuring ghosts consistently choose valid and optimal paths at intersections required precise distance checking and raycast tuning.
-* **Behavior Switching**: Managing transitions—especially from frightened back to chase—demanded careful sequencing and timing controls.
-* **Ghost Diversity**: Creating behaviorally distinct yet balanced ghosts required extensive testing to avoid predictable or erratic patterns.
-* **State Modularity**: Isolating state logic into separate components helped maintain clarity but increased the need for consistent state coordination.
-
-With these AI systems in place, our ghosts are now fully operational and pose a real threat. The groundwork laid here sets the stage for Milestone 3, where Pac-Man’s responsiveness and game-wide logic will be brought to completion.
-
+Now each ghost feels more unique and behaves in a way that matches their role in the classic game. The AI makes the game more interesting and difficult, and the behavior switching helps make the gameplay dynamic. This milestone gave us a solid enemy system to build on for the next phase, where we’ll finish up Pac-Man’s logic and polish the full game loop.
