@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public Ghost[] ghosts;
     public Pacman pacman;
     public Transform pellets; //transform bc need to look through all the children
+    public GameObject winScreenPanel;
+    public TMP_Text winScoreText; // link to final score text on win screen
     public GameOverScreen gameOverScreen;
 
     public AudioClip gameOverClip;
@@ -75,6 +77,11 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         gameOverScreen.Reset();
+        
+        if (winScreenPanel != null)
+        {
+            winScreenPanel.SetActive(false);
+        }
 
         currentLevel = 1;
         SetScore(0);
@@ -163,6 +170,27 @@ public class GameManager : MonoBehaviour
         AudioSource.PlayClipAtPoint(gameOverClip, transform.position, 1f);
     }
 
+    private void WinGame()
+    {
+        // Stop everything
+        for (int i = 0; i < this.ghosts.Length; i++) {
+            this.ghosts[i].gameObject.SetActive(false);
+        }
+
+        this.pacman.gameObject.SetActive(false);
+
+        if (winScoreText != null) {
+            winScoreText.text = "Final Score: " + this.score;
+        }
+
+        if (winScreenPanel != null) {
+            winScreenPanel.SetActive(true);
+        }
+
+        //Time.timeScale = 0f; // optional: pause game
+    }
+
+
     public void GhostEaten(Ghost ghost)
     {
         int points = ghost.points + this.ghostMultiplier;
@@ -216,9 +244,16 @@ public class GameManager : MonoBehaviour
 
         if (!HasRemainingPellets())
         {
-            currentLevel++;
-            this.pacman.gameObject.SetActive(false);
-            Invoke(nameof(NewRound), 3.0f);
+            if (currentLevel >= 10)
+            {
+                WinGame();
+            }
+            else
+            {
+                currentLevel++;
+                this.pacman.gameObject.SetActive(false);
+                Invoke(nameof(NewRound), 3.0f);
+            }
         }
     }
 
