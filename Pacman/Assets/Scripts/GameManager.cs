@@ -216,6 +216,8 @@ public class GameManager : MonoBehaviour
 
     private void NewRound()
     {
+        pacman.gameObject.SetActive(true);
+
         if (fruitDisplay != null)
             fruitDisplay.SetFruitForLevel(currentLevel);
 
