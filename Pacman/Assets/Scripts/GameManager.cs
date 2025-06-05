@@ -17,6 +17,11 @@ public class GameManager : MonoBehaviour
     // Game Over screen
     public GameOverScreen gameOverScreen;
 
+    // Pause screen
+    public GameObject pauseScreenPanel;
+    public GameObject pauseButton;
+    private bool isPaused = false;
+
     // Speed pellet
     public GameObject speedPelletPrefab;
     public Transform speedPelletSpawnPoint;
@@ -80,11 +85,32 @@ public class GameManager : MonoBehaviour
         NewGame();
     }
 
+    public void PauseGame()
+    {
+        isPaused = true;
+        Time.timeScale = 0f;
+
+        pauseScreenPanel.SetActive(true);
+        pauseButton.SetActive(false);
+    }
+
+    public void ResumeGame()
+    {
+        isPaused = false;
+        Time.timeScale = 1f;
+
+        pauseScreenPanel.SetActive(false);
+        pauseButton.SetActive(true);
+    }
+
     private void Update()
     {
-        if (false)
-        { //for now any key to start the game over, I think later its better to set up a specific screen with a specific button and key
-            NewGame();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused)
+                ResumeGame();
+            else
+                PauseGame();
         }
 
         if (!speedPelletActive)
