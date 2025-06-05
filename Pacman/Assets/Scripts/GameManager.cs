@@ -69,6 +69,10 @@ public class GameManager : MonoBehaviour
     private int pelletsEaten = 0;
     private bool fruitSpawned = false;
     public GameObject startButton;
+    public GameObject winRestartButton;
+    public GameObject gameOverRestartButton;
+    public GameObject resumeButton;
+
 
     private void Start()
     {
@@ -99,6 +103,12 @@ public class GameManager : MonoBehaviour
 
         pauseScreenPanel.SetActive(true);
         pauseButton.SetActive(false);
+
+            if (resumeButton != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(resumeButton);
+        }
     }
 
     public void ResumeGame()
@@ -247,6 +257,12 @@ public class GameManager : MonoBehaviour
         gameOverScreen.Setup(score);
 
         AudioSource.PlayClipAtPoint(gameOverClip, transform.position, 1f);
+
+        if (gameOverRestartButton != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(gameOverRestartButton);
+        }
     }
 
     private void WinGame()
@@ -267,6 +283,11 @@ public class GameManager : MonoBehaviour
         if (winScreenPanel != null)
         {
             winScreenPanel.SetActive(true);
+        }
+         if (winRestartButton != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(winRestartButton);
         }
     }
 
