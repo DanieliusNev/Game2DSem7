@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
@@ -67,20 +68,26 @@ public class GameManager : MonoBehaviour
     //to track when fruit should appear
     private int pelletsEaten = 0;
     private bool fruitSpawned = false;
+    public GameObject startButton;
 
-    private void Start() {
+    private void Start()
+    {
+        ShowStartScreen();
         pacman.gameObject.SetActive(false);
-        foreach (Ghost ghost in ghosts) {
+        foreach (Ghost ghost in ghosts)
+        {
             ghost.gameObject.SetActive(false);
         }
 
         // Optional: hide pellets too
-        foreach (Transform pellet in this.pellets) {
+        foreach (Transform pellet in this.pellets)
+        {
             pellet.gameObject.SetActive(false);
         }
     }
 
-    public void StartGame() {
+    public void StartGame()
+    {
         startScreenPanel.SetActive(false);
         NewGame();
     }
@@ -153,7 +160,7 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         gameOverScreen.Reset();
-        
+
         if (winScreenPanel != null)
         {
             winScreenPanel.SetActive(false);
@@ -163,7 +170,7 @@ public class GameManager : MonoBehaviour
         SetScore(0);
         SetLives(3);
 
-        pelletsEaten = 0;       
+        pelletsEaten = 0;
         fruitSpawned = false;
 
         pacman.gameObject.SetActive(true);
@@ -245,17 +252,20 @@ public class GameManager : MonoBehaviour
     private void WinGame()
     {
         // Stop everything
-        for (int i = 0; i < this.ghosts.Length; i++) {
+        for (int i = 0; i < this.ghosts.Length; i++)
+        {
             this.ghosts[i].gameObject.SetActive(false);
         }
 
         this.pacman.gameObject.SetActive(false);
 
-        if (winScoreText != null) {
+        if (winScoreText != null)
+        {
             winScoreText.text = "Final Score: " + this.score;
         }
 
-        if (winScreenPanel != null) {
+        if (winScreenPanel != null)
+        {
             winScreenPanel.SetActive(true);
         }
     }
@@ -407,7 +417,7 @@ public class GameManager : MonoBehaviour
     {
         this.ghostMultiplier = 1;
     }
-    
+
     private void SpawnFruitForLevel(int level)
     {
         if (fruitPrefab == null || fruitSpawnPoint == null)
@@ -446,6 +456,14 @@ public class GameManager : MonoBehaviour
 
         pacman.movement.speedMultiplier = originalMultiplier;
         pacman.GetComponent<SpriteRenderer>().color = Color.white;
+    }
+    
+    public void ShowStartScreen()
+    {
+        startScreenPanel.SetActive(true);
+
+        EventSystem.current.SetSelectedGameObject(null); // Clear any previous selection
+        EventSystem.current.SetSelectedGameObject(startButton); // Highlight the Play button
     }
 
     private IEnumerator ExpireShieldAfterTime(float duration)
