@@ -1,4 +1,4 @@
-# 🧩 Milestone 2: Ghost Behavior & AI
+# Milestone 2: Ghost Behavior & AI
 
 For this milestone, we worked on getting the ghost logic fully working in our Pac-Man game. In the beginning, all the ghosts were using the same logic — they just chased Pac-Man by heading straight toward his current position. While this worked for testing, it didn’t feel like the original game and made the ghosts too similar.
 
