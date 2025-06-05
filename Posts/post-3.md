@@ -30,9 +30,6 @@ We implemented three core panels: Start, Game Over, and Win screens. Each offers
 
 ## Technical Challenges
 
-* **Collision Tuning**: Ensuring accurate and efficient interactions using the layer matrix.
-* **Node Navigation**: Building reliable direction detection at intersections.
-* **Pellet Logic**: Tracking state and spawning fruit only once per round.
-* **UI Handling**: Managing state transitions cleanly between rounds and outcomes.
+Setting up the collision matrix required precision to ensure accurate interactions without unnecessary physics checks. Implementing node-based navigation brought challenges with raycasting and consistent direction detection at intersections. Pellet tracking needed careful control to manage state and trigger fruit spawns correctly. Finally, UI transitions had to be cleanly coordinated to avoid overlap and provide smooth feedback across game states.
 
 This milestone provided the essential systems to support more complex game logic in future stages.
