@@ -18,7 +18,7 @@ The Maze Tilemap defines the impassable walls. A separate Pellets Tilemap was us
 
 ### 3. Pellet Mechanics
 
-Three pellet types were implemented. `Pellet.cs` awards 10 points and disappears on contact. `PowerPellet.cs` triggers frightened mode in ghosts for 8 seconds. `SpeedPellet.cs` temporarily boosts Pac-Man’s speed and color. Each uses trigger events and is processed by `GameManager`.
+Three pellet types were implemented. `Pellet.cs` awards 10 points and disappears on contact. `PowerPellet.cs` triggers frightened mode in ghosts for 8 seconds. Each uses trigger events and is processed by `GameManager`.
 
 ### 4. Game Manager
 
