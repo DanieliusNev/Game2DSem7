@@ -3,7 +3,7 @@
 Video demonstration about our game:
 [Link](https://www.youtube.com/watch?v=vFjQR7q0Pd8)
 
-Blog posts:
+Our 6 Blog posts:
 - [Post 1](https://github.com/DanieliusNev/Game2DSem7/blob/main/Posts/post-1.md)
 - [Post 2](https://github.com/DanieliusNev/Game2DSem7/blob/main/Posts/post-2.md)
 - [Post 3](https://github.com/DanieliusNev/Game2DSem7/blob/main/Posts/post-3.md)
