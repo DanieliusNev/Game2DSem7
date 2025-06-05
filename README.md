@@ -1,7 +1,7 @@
 # Game2DSem7
 
 Youtube video link:
-[Link]()
+[Link](https://www.youtube.com/watch?v=vFjQR7q0Pd8)
 
 Blog posts:
 - [Post 1](https://github.com/DanieliusNev/Game2DSem7/blob/main/Posts/post-1.md)
