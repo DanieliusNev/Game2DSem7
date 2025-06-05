@@ -22,7 +22,7 @@ The score updates dynamically during gameplay using the `SetScore()` method in t
 
 ## Power-Ups
 
-Two new power-ups were added to spice up gameplay:
+Two new power-ups (Special pellets) were added to spice up gameplay:
 
 - Shield, which gives Pac-Man one free hit without dying.
 - Speed Boost, temporarily making him move faster.
