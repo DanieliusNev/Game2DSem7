@@ -321,7 +321,10 @@ MonoBehaviour:
   fruitPrefab: {fileID: 6875574815232763381, guid: 1203cde07d7880c47bd890020c343c50, type: 3}
   fruitSpawnPoint: {fileID: 752840438}
   fruitScores: 640000002c010000f4010000bc020000e8030000e8030000d0070000b80b0000b80b000088130000
-  startButton: {fileID: 0}
+  startButton: {fileID: 394211272}
+  winRestartButton: {fileID: 1472097989}
+  gameOverRestartButton: {fileID: 1247175259}
+  resumeButton: {fileID: 1998378458}
 --- !u!4 &65132524
 Transform:
   m_ObjectHideFlags: 0
