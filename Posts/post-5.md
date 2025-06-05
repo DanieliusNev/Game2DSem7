@@ -6,7 +6,7 @@ In the final milestone, we focused on implementing all the core game mechanics a
 
 One of the first things we tackled was creating a working round system. After eating all the pellets, a new round is triggered, ghosts reset, pellets are reactivated, and the game continues into the next level. To keep things clean and modular, we used a `NewRound()` function in the `GameManager` that handles all the resets.
 
-However, we ran into some issues here — particularly with Pac-Man disappearing after losing. For a while, when the player lost all lives, Pac-Man wouldn’t reappear properly in the next game. We had to carefully manage the state resets in both the `PacmanEaten()` and `NewGame()` functions to make sure everything respawns in the right order.
+However, we ran into some issues here, particularly with Pac-Man disappearing after losing. For a while, when the player lost all lives, Pac-Man wouldn’t reappear properly in the next game. We had to carefully manage the state resets in both the `PacmanEaten()` and `NewGame()` functions to make sure everything respawns in the right order.
 
 ## Lives & Game Over
 
@@ -16,7 +16,7 @@ Another tricky part was making sure the game could restart cleanly after a Game 
 
 ## Scoring System
 
-The scoring system is based on classic Pac-Man rules. Each normal pellet gives 10 points, and power pellets (big ones) give 100 points. We also added fruit bonuses which appear depending on the current level — these are placed in a separate UI element at the bottom of the screen.
+The scoring system is based on classic Pac-Man rules. Each normal pellet gives 10 points, power pellets (big ones) give 100 points and eating a ghost while it's in frightened mode grants 200 points. We also added fruit bonuses which appear depending on the current level — these are placed in a separate UI element at the bottom of the screen.
 
 The score updates dynamically during gameplay using the `SetScore()` method in the `GameManager`, and is shown on screen via a `TMP_Text` UI component.
 
