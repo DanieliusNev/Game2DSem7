@@ -11,4 +11,4 @@ Blog posts:
 - [Post 5](https://github.com/DanieliusNev/Game2DSem7/blob/main/Posts/post-5.md)
 - [Post 6](https://github.com/DanieliusNev/Game2DSem7/blob/main/Posts/post-6.md)
 
-Third-party sources: [Tutorial video link](https://www.youtube.com/watch?v=TKt_VlMn_aA)
+Third-party sources: [link](https://www.youtube.com/watch?v=TKt_VlMn_aA)
