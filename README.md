@@ -11,4 +11,6 @@ Our 6 Blog posts:
 - [Post 5](https://github.com/DanieliusNev/Game2DSem7/blob/main/Posts/post-5.md)
 - [Post 6](https://github.com/DanieliusNev/Game2DSem7/blob/main/Posts/post-6.md)
 
-Third-party sources: [link](https://www.youtube.com/watch?v=TKt_VlMn_aA)
+Third-party sources, that we have used: [Link](https://www.youtube.com/watch?v=TKt_VlMn_aA)
+
+Roll-a-ball game repository link: [Link](https://github.com/DanieliusNev/Sem7RollBall)
