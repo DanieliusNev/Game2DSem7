@@ -1,6 +1,6 @@
 # Game2DSem7
 
-Youtube video link:
+Video demonstration about our game:
 [Link](https://www.youtube.com/watch?v=vFjQR7q0Pd8)
 
 Blog posts:
