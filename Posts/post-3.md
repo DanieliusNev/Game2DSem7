@@ -26,7 +26,7 @@ The `GameManager.cs` handles scoring, lives, and level flow. When all pellets ar
 
 ### 5. User Interface
 
-We implemented three core panels: Start, Game Over, and Win screens. Each offers essential feedback and options like Play or Restart. Score and lives are updated in real time using TextMeshPro. The `FruitDisplay.cs` manages fruit sprites based on level progression.
+We implemented four core panels: Start,Pause, Game Over, and Win screens. Each offers essential feedback and options like Play, Continue or Restart. Score and lives are updated in real time using TextMeshPro. The `FruitDisplay.cs` manages fruit sprites based on level progression.
 
 ## Technical Challenges
 
