@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 418082389026918516}
   - component: {fileID: 992665226093279961}
   - component: {fileID: 1499708035239223612}
-  - component: {fileID: 71258534302051129}
+  - component: {fileID: 4084592976832290618}
   m_Layer: 0
-  m_Name: SpeedPellet
+  m_Name: ShieldPellet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.49, y: 1.609, z: 0}
-  m_LocalScale: {x: 1, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f3ad6a179f966804cad0514a2acbf0b0, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.11902046, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points: 10
---- !u!114 &71258534302051129
+--- !u!114 &4084592976832290618
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -154,8 +154,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6689345377836539094}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2751f8e0920de4ec0b765b343585a060, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a680e1a908b54081860d755c6e1b658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   points: 10
-  duration: 7

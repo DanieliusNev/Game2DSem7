@@ -24,6 +24,15 @@ public class GameManager : MonoBehaviour
     private float speedPelletTimer = 0f;
     private bool speedPelletActive = false;
 
+    // Shield pellet
+    public GameObject shieldPelletPrefab;
+    public Transform shieldPelletSpawnPoint;
+
+    private float shieldPelletTimer = 0f;
+    private bool shieldPelletActive = false;
+
+    private bool shieldActive = false;
+
     // Audio clips
     public AudioClip gameOverClip;
     public AudioClip victoryClip;
@@ -88,12 +97,27 @@ public class GameManager : MonoBehaviour
                 speedPelletActive = true;
             }
         }
+
+        if (!shieldPelletActive)
+        {
+            shieldPelletTimer -= Time.deltaTime;
+
+            if (shieldPelletTimer <= 0f)
+            {
+                SpawnShieldPellet();
+                shieldPelletActive = true;
+            }
+        }
     }
 
     private void NewGame()
     {
         speedPelletTimer = 30f;
         speedPelletActive = false;
+
+        shieldPelletTimer = 40f; // Time until first shield pellet appears
+        shieldPelletActive = false;
+
 
         SetScore(0); //start game with 0
         SetLives(3);
@@ -226,6 +250,28 @@ public class GameManager : MonoBehaviour
         speedPelletActive = false;
     }
 
+    private void SpawnShieldPellet()
+    {
+        if (shieldPelletPrefab != null && shieldPelletSpawnPoint != null)
+        {
+            Instantiate(shieldPelletPrefab, shieldPelletSpawnPoint.position, Quaternion.identity);
+        }
+    }
+
+    public void ShieldPelletEaten(ShieldPellet pellet)
+    {
+        PelletEaten(pellet);
+        shieldActive = true;
+        pacman.GetComponent<SpriteRenderer>().color = Color.cyan;
+
+        shieldPelletTimer = 30f;
+        shieldPelletActive = false;
+
+        // Start shield expiration countdown
+        StartCoroutine(ExpireShieldAfterTime(10f)); // 10 seconds
+    }
+
+
     public void GhostEaten(Ghost ghost)
     {
         int points = ghost.points + this.ghostMultiplier;
@@ -236,6 +282,18 @@ public class GameManager : MonoBehaviour
 
     public void PacmanEaten()
     {
+        if (shieldActive)
+        {
+            shieldActive = false;
+            pacman.GetComponent<SpriteRenderer>().color = Color.white;
+
+            // Disable all ghost colliders briefly
+            StartCoroutine(DisableGhostColliders(0.5f));
+
+            Debug.Log("Shield absorbed the hit!");
+            return;
+        }
+
         Vector3 deathPos = pacman.transform.position;
 
         AudioSource.PlayClipAtPoint(pacmanEatenClip, transform.position, 1f);
@@ -354,7 +412,7 @@ public class GameManager : MonoBehaviour
     {
         float originalMultiplier = pacman.movement.speedMultiplier;
 
-        pacman.GetComponent<SpriteRenderer>().color = Color.cyan;
+        pacman.GetComponent<SpriteRenderer>().color = Color.red;
 
         pacman.movement.speedMultiplier = 1.5f;
 
@@ -364,4 +422,34 @@ public class GameManager : MonoBehaviour
         pacman.GetComponent<SpriteRenderer>().color = Color.white;
     }
 
+    private IEnumerator ExpireShieldAfterTime(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        if (shieldActive)
+        {
+            shieldActive = false;
+            pacman.GetComponent<SpriteRenderer>().color = Color.white;
+            Debug.Log("Shield expired after 10 seconds.");
+        }
+    }
+
+    private IEnumerator DisableGhostColliders(float duration)
+    {
+        foreach (Ghost ghost in ghosts)
+        {
+            Collider2D col = ghost.GetComponent<Collider2D>();
+            if (col != null)
+                col.enabled = false;
+        }
+
+        yield return new WaitForSeconds(duration);
+
+        foreach (Ghost ghost in ghosts)
+        {
+            Collider2D col = ghost.GetComponent<Collider2D>();
+            if (col != null)
+                col.enabled = true;
+        }
+    }
 }
